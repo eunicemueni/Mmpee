@@ -38,3 +38,79 @@
   </button>
 </div>
 <img src="https://i.imgur.com/2t3aK6j.png" class="h-6" alt="M-PESA">
+import React from "react";
+
+const DiamondPayment = () => {
+  // Paystack Payment
+  const handlePaystackPayment = () => {
+    const handler = window.PaystackPop.setup({
+      key: "pk_live_7ffc2b84bc78834772aa6300d0cc489a06e5df76",
+      email: "customer@example.com", // replace with dynamic user email
+      amount: 44900, // $449 in kobo if NGN, adjust currency
+      currency: "USD",
+      ref: "" + Math.floor(Math.random() * 1000000000 + 1),
+      callback: function (response) {
+        alert("Payment successful! Ref: " + response.reference);
+      },
+      onClose: function () {
+        alert("Payment cancelled");
+      },
+    });
+    handler.openIframe();
+  };
+
+  // Stripe Payment (redirect using your link)
+  const handleStripePayment = () => {
+    window.location.href =
+      "https://buy.stripe.com/eVq6oH0MO4Bm7Kifyi7Zu01";
+  };
+
+  // PayPal Payment (redirect using your link)
+  const handlePayPalPayment = () => {
+    window.location.href =
+      "https://www.paypal.com/ncp/payment/S77ESJWSU79JU";
+  };
+
+  return (
+    <div className="max-w-md mx-auto p-6 bg-[#2b1f38] rounded-xl shadow-lg text-center space-y-4">
+      <h2 className="text-3xl font-bold text-[#D4AF37] mb-2">Diamond Plan</h2>
+      <p className="text-lg text-white font-semibold mb-6">$449 - Full Access</p>
+
+      {/* PayPal Button */}
+      <button
+        onClick={handlePayPalPayment}
+        className="flex items-center justify-center gap-2 w-full py-3 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition"
+      >
+        <img src="/logos/paypal.svg" alt="PayPal" className="h-5" />
+        Pay with PayPal
+      </button>
+
+      {/* Paystack Button */}
+      <button
+        onClick={handlePaystackPayment}
+        className="flex items-center justify-center gap-2 w-full py-3 bg-purple-600 text-white font-semibold rounded hover:bg-purple-700 transition"
+      >
+        <img src="/logos/paystack.svg" alt="Paystack" className="h-5" />
+        Pay with Paystack
+      </button>
+
+      {/* Stripe Button */}
+      <button
+        onClick={handleStripePayment}
+        className="flex items-center justify-center gap-2 w-full py-3 bg-[#6772E5] text-white font-semibold rounded hover:bg-[#5469d4] transition"
+      >
+        <img src="/logos/stripe.svg" alt="Stripe" className="h-5" />
+        Pay with Stripe
+      </button>
+
+      {/* Optional Card Logos */}
+      <div className="flex justify-center gap-4 mt-4">
+        <img src="/logos/visa.svg" alt="Visa" className="h-6 opacity-80" />
+        <img src="/logos/mastercard.svg" alt="MasterCard" className="h-6 opacity-80" />
+        <img src="/logos/amex.svg" alt="Amex" className="h-6 opacity-80" />
+      </div>
+    </div>
+  );
+};
+
+export default DiamondPayment;
